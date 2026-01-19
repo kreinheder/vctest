@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Viewer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        .bigbox {
+            margin: auto;
+            max-width: 800px;
+            height: 560px;
+            display: block;
+            background-position: center;
+            background-color: #cccccc;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            line-height: 36px;
+            position: relative;
+            text-align: right;
+        }
+
+        #PriceValue {
+            font-size: 20px;
+            color: #fff;
+            text-shadow: 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4" style="padding: 0">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" id="LogView" class="btn btn-success active" data-toggle="button"
+                            aria-pressed="false" autocomplete="off">Log
+                        </button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Data
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" id="AllData">All</a>
+                            </li>
+                            <li>
+                                <a href="#" id="Categorized">Categorized</a>
+                            </li>
+                            <li>
+                                <a href="#" id="Alden">Alden</a>
+                            </li>
+                            <li>
+                                <a href="#" id="Uncategorized">Uncategorized</a>
+                            </li>
+                            <li>
+                                <a href="#" id="Viberg">Viberg</a>
+                            </li>
+                            <li>
+                                <a href="#" id="FootJoy">FootJoy</a>
+                            </li>
+                            <li>
+                                <a href="#" id="AllenEdmonds">Allen Edmonds</a>
+                            </li>
+                            <li>
+                                <a href="#" id="CategorizedMidBoots">Categorized Mid Boots</a>
+                            </li>
+                            <li>
+                                <a href="#" id="WatchlistActive">Active Watchlist</a>
+                            </li>
+                            <li>
+                                <a href="#" id="WatchlistCompleted">Completed Watchlist</a>
+                            </li>
+                            <li>
+                                <a href="#" id="WatchlistNoSize">Watchlist - No Size</a>
+                            </li>
+                            <li>
+                                <a href="#" id="AldenNoSize">Alden - No Size</a>
+                            </li>
+                            <li>
+                                <a href="#" id="AldenReview">Alden - Review</a>
+                            </li>
+                            <li>
+                                <a href="#" id="AldenCheckback">Alden - Checkback</a>
+                            </li>
+                            <li>
+                                <a href="#" id="AldenRobotReview">Alden - Robot Review</a>
+                            </li>
+                            <li>
+                                <a href="#" id="AldenBargain">Alden - Bargain</a>
+                            </li>
+                            <li>
+                                <a href="#" id="BrooksBrothers">Brooks Brothers</a>
+                            </li>
+                            <li>
+                                <a href="#" id="TommyBahama">Tommy Bahama</a>
+                            </li>
+                            <li>
+                                <a href="#" id="Watches">Watches</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control" id="ItemInput" placeholder="Search Value...">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Search
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+
+                            <li>
+                                <a href="#" id="AldenNum">Alden Model</a>
+                            </li>
+                            <li>
+                                <a href="#" id="FlorsheimNum">Florsheim Model</a>
+                            </li>
+                            <li>
+                                <a href="#" id="EbayNum">Ebay Item</a>
+                            </li>
+                            <li>
+                                <a href="#" id="UserIDSearch">UserID</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8" style="padding: 0">
+                <p class="pull-right text-nowrap" style="font-size: 18px;" id="Title"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="row">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">CurrentPrice</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static">
+                                            <strong>
+                                                <span id="CurrentPrice"></span>
+                                            </strong>
+                                            <span id="Best" class="label label-success"></span>
+                                            <span class="label label-success" id="BuyItNowPrice"></span>
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">ItemGroupID</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="ItemGroupID">
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">ListingType</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="ListingType"></p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">ListingStatus</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static">
+                                            <span id="ListingStatus" class="label"></span> (Hits:
+                                            <span id="HitCount"></span>)
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">StartTime</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="StartTime"></p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">Ends</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="Ends"></p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">Duration</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="Duration"></p>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <button type="button" class="btn btn-warning pull-right btn-sm"
+                                            id="IgnoreItemGroupID">Ignore
+                                            Item</button>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static">
+                                            <a href=# id="ViewOnEbay">
+                                                <span id="ItemID"></span>
+                                            </a> (Listings:
+                                            <span id="ItemGroupCount"></span>)
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">SearchBrand</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="SearchBrand"></p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="button" id="IgnoreBrand"
+                                            class="btn btn-warning pull-right  btn-sm">Ignore
+                                            Brand</button>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static">
+                                            <span id="Brand"></span>
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">ConditionValue</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="ConditionValue"></p>
+                                    </div>
+                                    <label class="col-sm-4 control-label">Size / Width</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="DisplaySize"></p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="button" id="IgnoreUser"
+                                            class="btn btn-warning pull-right  btn-sm">Ignore
+                                            User</button>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static" id="UserID"></p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger" id="DeleteItem">Delete</button>
+                                <button type="button" class="btn btn-success" id="Watchlist">Watchlist</button>
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn disabled btn-primary dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        id="CorrectSize">
+                                        Correct
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#" class="corrected-size">6</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">6.5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">7</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">7.5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">8</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">8.5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">9</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">9.5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">10</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">10.5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">11</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">11.5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">12</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">12.5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">13</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="corrected-size">14</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                        id="ItemInfo">
+                                        Item Info
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#" id="GetSingleItem">Single Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" id="GetCompleted">Completed</a>
+                                        </li>
+                                    </ul>
+                                    <!-- <button type="button" class="btn disabled btn-primary btn-sm" id="NOSbutton">NOS</button> -->
+                                    <!-- <button type="button" class="btn disabled btn-primary btn-sm" id="ShellButton">Shell</button> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label for="ModelNumberInput">Alden Model Details</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Model" id="ModelNumberInput">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" id="AldenActionUpdate">Update</button>
+                                    <div class="btn-group dropup">
+                                        <button type="button" class="btn btn-primary dropdown-toggle"
+                                            data-toggle="dropdown" id="ActionDropdown">
+                                            Actions
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#" id="AldenActionIgnore">Ignore</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="AldenActionCheckback">Checkback</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="AldenActionResetItem">Reset Item</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="btn-group dropup">
+                                        <button type="button" class="btn btn-primary dropdown-toggle"
+                                            data-toggle="dropdown" id="InfoDropdown">
+                                            Info
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#" id="AldenActionInfo" data-toggle="modal"
+                                                    data-target="#ModelInfoModal">Description</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="AldenViewModel">View Model</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button class="btn" type="button" id="AldenActionRobotReview">Robot</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=" col-sm-4">
+                                <span id="PositionText"></span>
+                            </div>
+                            <div class=" col-sm-8">
+                                <span id="ActionText"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="settings">Test</div>
+                </div>
+            </div>
+            <div class="col-sm-8 bigbox" id="photobox">
+                <span id="PriceValue"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="ModelInfoModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Item Description</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="ItemDescription"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script>
+        "use strict"
+        var y = 0;
+        var x = 0;
+        console.log('starting');
+        var d;
+        var aldenModelInfo = {};
+        var aldenRobotScoreTextInfo = {};
+        var aldenRobotScoreVisualInfo = {};
+        //  var d = JSON.parse('{"Listings": [{"ItemID": "172912628683","CurrentPrice": "151.50","Title": "VTG Hanover LB Sheppard 2168 Shell Cordovan 9.5 D PTB Like Florsheim","BestOfferEnabled": "false","BuyItNowAvailable": "false","Width": "Medium (D, M)","SearchBrand": "Hanover","Brand": "Hanover","BidCount": "10","HitCount": "562","ClickCount": "","CatType": "shoe","ConditionValue": "Pre-owned","StartTime": "1508112950000","EndTime": "1508717750000","Ends": "4 hours, 44 minutes","ListingType": "Auction","ListingStatus": "EndedWithSales","QuantitySold": "1","Duration": "7 days, 0 hours, 0 minutes","SortSize": "9.5","DisplaySize": "9.5","CurrencyID": "USD","BuyItNowPrice": "","smallImg": "https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/DS4AAOSwErFZ2VwI/$_1.JPG","mediumImg": "https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/DS4AAOSwErFZ2VwI/$_12.JPG","largeImg": "https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/DS4AAOSwErFZ2VwI/$_4.JPG","Pictures": ["https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/DS4AAOSwErFZ2VwI/$_12.JPG","https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/HjEAAOSw3z5Z2VwO/$_12.JPG","https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/rOMAAOSwCV5Z2VwF/$_12.JPG","https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/bZIAAOSwg0BZ2VwL/$_12.JPG","https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/pDIAAOSwHqRZ2VwT/$_12.JPG","https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/lAkAAOSwugtZ2VwX/$_12.JPG","https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/FeAAAOSw1KNZ2Vxg/$_12.JPG","https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/yTsAAOSwnwZZ2VwR/$_12.JPG","https://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/XF8AAOSwaWhZ2VxT/$_12.JPG"]}, {"ItemID": "172884803245","CurrentPrice": "89.00","Title": "VTG Florsheim Royal Imperial 97606 Stratford 11 C Brown Wing Tip","BestOfferEnabled": "","BuyItNowAvailable": "","Width": "Narrow (C, B)","SearchBrand": "Florsheim","Brand": "Florsheim","BidCount": "0","HitCount": "698","ClickCount": "","CatType": "shoe","ConditionValue": "Pre-owned","StartTime": "1506304863000","EndTime": "1508896863000","Ends": "1 days, 21 hours","ListingType": "FixedPrice","ListingStatus": "Active","QuantitySold": "0","Duration": "30 days, 0 hours, 0 minutes","SortSize": "11","DisplaySize": "11","CurrencyID": "USD","BuyItNowPrice": "","smallImg": "http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/M~gAAOSwRuZZyGHA/$_1.JPG","mediumImg": "http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/M~gAAOSwRuZZyGHA/$_12.JPG","largeImg": "http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/M~gAAOSwRuZZyGHA/$_4.JPG","Pictures": ["http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/M~gAAOSwRuZZyGHA/$_12.JPG","http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/r18AAOSwynRZyGG9/$_12.JPG","http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/bB4AAOSwa59ZyGGs/$_12.JPG","http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/C2AAAOSwImZZyGGu/$_12.JPG","http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/ZngAAOSwJwpZyGGl/$_12.JPG","http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/jwwAAOSwsm1ZyGGp/$_12.JPG","http://i.ebayimg.com/00/s/MTIwMlgxNjAw/z/ViMAAOSwXedZyGGx/$_12.JPG","http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/tgMAAOSwFARZyGG0/$_12.JPG","http://i.ebayimg.com/00/s/MTIwMVgxNjAw/z/k48AAOSwfCZZyGG6/$_12.JPG","http://i.ebayimg.com/00/s/MTE0OFgxNjAw/z/ayQAAOSwT6JZyGGi/$_12.JPG"]}]}');
+
+        $(window).load(function () {
+            $("body").keydown(function (e) {
+                if (e.which == 37) { // left     
+                    navChange('keypress', 'left');
+                }
+                else if (e.which == 39) { // right   
+                    navChange('keypress', 'right');
+                }
+                else if (e.which == 38) { // up     
+                    navChange('keypress', 'up');
+                }
+                else if (e.which == 40) { // down     
+                    navChange('keypress', 'down');
+                }
+                else if (e.which == 90) { // lowercase z   
+                    SetBrandIgnore();
+                }
+            });
+        });
+
+        function navChange(event, direction) {
+            if (direction == 'down') {
+                x = 0;
+                aldenModelInfo = {};
+                aldenRobotScoreTextInfo = {};
+                aldenRobotScoreVisualInfo = {};
+                //its okay that these log async
+                if ($("#LogView").hasClass('active')) {
+                    logView(d.Listings[y].ItemID);
+                }
+                if ($("#AldenActionRobotReview").hasClass('active')) {
+                    logRobotReview(d.Listings[y].ItemID);
+                }
+                if (y < d.Listings.length - 1) {
+                    y++;
+                }
+            }
+            else if (direction == 'up') {
+                y--;
+                x = 0;
+                aldenModelInfo = {};
+                aldenRobotScoreTextInfo = {};
+                aldenRobotScoreVisualInfo = {};
+                if (y < 0) { y = 0; };
+            }
+            else if (direction == 'right') {
+                if (x < (d.Listings[y].Pictures.length - 1)) {
+                    x++;
+                }
+            }
+            else if (direction == 'left') {
+                x--;
+                if (x < 0) { x = 0; };
+            }
+            RenderData();
+        }
+
+        function getItems(filter, callback) {
+            let p = "https://vcleat.com/vc/services/ListItems2.php?Brands=" + filter;
+            $.get(p, function (data, status) {
+                y = 0;
+                x = 0;
+                d = JSON.parse(data);
+                callback();
+            });
+        }
+
+        function getTommy(callback) {
+            let p = "https://vcleat.com/vc/admin/services/tommybahamalist.php";
+            $.get(p, function (data, status) {
+                y = 0;
+                x = 0;
+                d = JSON.parse(data);
+                callback();
+            });
+        }
+        function getWatches(callback) {
+            let p = "https://vcleat.com/vc/admin/services/watcheslist.php";
+            $.get(p, function (data, status) {
+                y = 0;
+                x = 0;
+                d = JSON.parse(data);
+                callback();
+            });
+        }
+        function findItems(filter, numvalue, callback) {
+            let p = "https://vcleat.com/vc/services/ListItems2.php?Brands=" + filter + "&numvalue=" + numvalue;
+            $.get(p, function (data, status) {
+                y = 0;
+                x = 0;
+                d = JSON.parse(data);
+                callback();
+            });
+        }
+
+        $("#Categorized").click(function () {
+            d = [];
+            getItems('Categorized', function () {
+                RenderData();
+            });
+        });
+        $("#AllenEdmonds").click(function () {
+            d = [];
+            getItems('AE', function () {
+                RenderData();
+            });
+        });
+        $("#Alden").click(function () {
+            d = [];
+            getItems('Alden', function () {
+                $("#AldenActionRobotReview").removeClass("disabled").addClass("active btn-success");
+                RenderData();
+            });
+        });
+        $("#Viberg").click(function () {
+            d = [];
+            //$("#LogView").removeClass("active btn-success");;
+            getItems('Viberg', function () {
+                RenderData();
+                $("#CorrectSize").removeClass("disabled").addClass("active");
+            });
+        });
+        $("#CategorizedMidBoots").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");;
+            getItems('CategorizedMidBoots', function () {
+                RenderData();
+            });
+        });
+        $("#FootJoy").click(function () {
+            d = [];
+            getItems('FootJoy', function () {
+                RenderData();
+            });
+        });
+        $("#Uncategorized").click(function () {
+            d = [];
+            getItems('NoBrand', function () {
+                RenderData();
+            });
+        });
+
+        $("#AllData").click(function () {
+            d = [];
+            getItems('All', function () {
+                RenderData();
+            });
+        });
+        $("#WatchlistActive").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");;
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            getItems('WatchlistActive', function () {
+                RenderData();
+            });
+        });
+        $("#WatchlistCompleted").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");;
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            getItems('WatchlistCompleted', function () {
+                RenderData();
+            });
+        });
+        $("#WatchlistNoSize").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            getItems('WatchlistNoSize', function () {
+                RenderData();
+            });
+        });
+        $("#AldenNoSize").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            getItems('AldenNoSize', function () {
+                RenderData();
+                $("#CorrectSize").removeClass("disabled").addClass("active");
+            });
+        });
+        $("#AldenReview").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            getItems('AldenReview', function () {
+                RenderData();
+            });
+        });
+        $("#AldenCheckback").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            getItems('AldenCheckback', function () {
+                RenderData();
+            });
+        });
+        $("#AldenRobotReview").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");;
+            getItems('AldenRobotReview', function () {
+                RenderData();
+            });
+        });
+        $("#AldenBargain").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");;
+            getItems('AldenBargain', function () {
+                RenderData();
+            });
+        });
+        $("#BrooksBrothers").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");;
+            getItems('BrooksBrothers', function () {
+                RenderData();
+            });
+        });
+        $("#TommyBahama").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");;
+            getTommy(function () {
+                RenderData();
+            });
+        });
+        $("#Watches").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");;
+            getWatches(function () {
+                RenderData();
+            });
+        });
+        $("#AldenNum").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            findItems('AldenNum', $("#ItemInput").val(), function () {
+                RenderData();
+            });
+        });
+        $("#FlorsheimNum").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            findItems('FlorsheimNum', $("#ItemInput").val(), function () {
+                RenderData();
+            });
+        });
+        $("#EbayNum").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            $("#ItemID").text($("#ItemInput").val());
+            findItems('EbayNum', $("#ItemInput").val(), function () {
+                RenderData();
+            });
+        });
+        $("#UserIDSearch").click(function () {
+            d = [];
+            $("#LogView").removeClass("active btn-success");
+            $("#AldenActionRobotReview").removeClass("active btn-success");
+            $("#UserID").text($("#ItemInput").val());
+            findItems('UserIDSearch', $("#ItemInput").val(), function () {
+                RenderData();
+            });
+        });
+        $(".corrected-size").click(function () {
+            console.log($(this).text());
+            if (d.Listings[y].SearchBrand === "Alden") {
+                $.post("/vc/services/SaveAldenSize.php",
+                    {
+                        "ItemID": d.Listings[y].ItemID,
+                        "SizeCorrected": $(this).text()
+                    },
+                    function (data, status) {
+                        $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                    }
+                );
+            }
+            else {
+                $.post("/vc/admin/services/SaveSizeCorrected.php",
+                    {
+                        "ItemID": d.Listings[y].ItemID,
+                        "Size": $(this).text()
+                    },
+                    function (data, status) {
+                        $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                    }
+                );
+            }
+        });
+        /*         $(NOSbutton).click(function () {
+                    $.post("/vc/admin/services/UpdateWatchNOS.php",
+                        {
+                            "ItemID": d.Listings[y].ItemID
+                        },
+                        function (data, status) {
+                            $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                        });
+                }); */
+        /*         $(ShellButton).click(function () {
+                    $.post("/vc/admin/services/UpdateWatchShell.php",
+                        {
+                            "ItemID": d.Listings[y].ItemID
+                        },
+                        function (data, status) {
+                            $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                        });
+                }); */
+        function RenderData() {
+            $("#PositionText").html("x: " + x + " y: " + y);
+            $("#ActionText").html("");
+            $("#CurrentPrice").html(d.Listings[y].CurrentPrice + " " + d.Listings[y].CurrencyID);
+            $("#PriceValue").html(d.Listings[y].CurrentPrice + " " + d.Listings[y].CurrencyID);
+
+            if (d.Listings[y].BestOfferEnabled === "true") {
+                $("#Best").html("BEST");
+            }
+            else {
+                $("#Best").html("");
+            }
+
+            $("#ListingStatus").removeClass("label-info");
+            $("#ListingStatus").removeClass("label-danger");
+
+            if (d.Listings[y].ListingStatus === "Active") {
+                $("#ListingStatus").addClass("label-info");
+            }
+            else {
+                $("#ListingStatus").addClass("label-danger");
+            }
+
+            $("#IgnoreBrand").removeClass("disabled");
+            if (d.Listings[y].SearchBrand !== "") {
+                $("#IgnoreBrand").addClass("disabled");
+            }
+            $("#CorrectSize").removeClass("active").addClass("disabled");
+
+            $("#Title").html(d.Listings[y].Title);
+            $("#ItemID").html(d.Listings[y].ItemID);
+            $("#SearchBrand").html(d.Listings[y].SearchBrand);
+            $("#Brand").html(d.Listings[y].Brand);
+            $("#ListingType").html(d.Listings[y].ListingType + ' (Bids: ' + d.Listings[y].BidCount + ')');
+            $("#ListingStatus").html(d.Listings[y].ListingStatus);
+            $("#HitCount").html(d.Listings[y].HitCount);
+            $("#ItemGroupCount").html(d.Listings[y].ItemGroupCount);
+            $("#DisplaySize").html(d.Listings[y].DisplaySize + ' / ' + d.Listings[y].Width);
+            // $(Width).html(d.Listings[y].Width);
+            $("#BuyItNowPrice").html(d.Listings[y].BuyItNowPrice);
+            $("#ItemGroupID").html(d.Listings[y].ItemGroupID);
+            $("#ConditionValue").html(d.Listings[y].ConditionValue);
+            var dt = new Date(d.Listings[y].StartTime - 1000);
+            $("#StartTime").html(dt.toDateString() + ' ' + dt.toLocaleTimeString());
+            $("#Duration").html(d.Listings[y].Duration);
+            $("#Ends").html(d.Listings[y].Ends);
+            $("#photobox").css("background-image", "url('" + d.Listings[y].Pictures[x] + "')");
+            $("#UserID").html('<a rel="noopener noreferrer" target="_blank" href="https://www.ebay.com/usr/' + d.Listings[y].UserID + '">' + d.Listings[y].UserID + '</a>');
+            $("#ItemInput").val("");
+            $("#ItemDescription").text(d.Listings[y].Description);
+            $("#ModelNumberInput").val(d.Listings[y].ModelNumber);
+            $("#ModelNumberInput").focus();
+
+            if (d.Listings[y].SearchBrand === "Alden") {
+                $("#CorrectSize").removeClass("disabled").addClass("active");
+            }
+
+            let nextDown1 = new Image();
+            let nextDown2 = new Image();
+            let nextDown3 = new Image();
+            let nextDown4 = new Image();
+            let nextDown5 = new Image();
+            let nextRight1 = new Image();
+            let nextRight2 = new Image();
+
+            if (d.Listings.length > y + 1) {
+                nextDown1.src = d.Listings[y + 1].Pictures[0];
+            }
+            if (d.Listings.length > y + 2) {
+                nextDown2.src = d.Listings[y + 2].Pictures[0];
+            }
+            if (d.Listings.length > y + 3) {
+                nextDown3.src = d.Listings[y + 3].Pictures[0];
+            }
+            if (d.Listings.length > y + 4) {
+                nextDown4.src = d.Listings[y + 4].Pictures[0];
+            }
+            if (d.Listings.length > y + 5) {
+                nextDown5.src = d.Listings[y + 5].Pictures[0];
+            }
+            if (d.Listings[y].Pictures.length > x + 1) {
+                nextRight1.src = d.Listings[y].Pictures[x + 1];
+            }
+            if (d.Listings[y].Pictures.length > x + 2) {
+                nextRight2.src = d.Listings[y].Pictures[x + 2];
+            }
+            if ((d.Listings[y].SearchBrand === "Alden") && (d.Listings[y].ModelNumber != "") && (x == 0)) {
+                getAldenModelData();
+                getAldenRobotScoringText();
+                getAldenRobotScoringVisual();
+            }
+            if ((d.Listings[y].SearchBrand === "Alden")) {
+                displayAldenModelData();
+            }
+        }
+
+        $(document).ready(function () {
+            $('#settings').tab('show')
+        });
+
+        $("#photobox").click(function () {
+            let url = d.Listings[y].Pictures[x];
+            if (event.shiftKey) {
+                var res = url.replace("_3.JPG", "_1.JPG");
+                $("#photobox").css("background-size", "100%");
+
+            } else {
+                url = d.Listings[y].Pictures[x];
+                var res = url.replace("_3.JPG", "_57.JPG");
+                var win = window.open(res, '_blank');
+            }
+
+        });
+
+        $("#LogView").click(function () {
+            $(this).toggleClass('btn-default btn-success');
+            $(this).toggleClass('active');
+        });
+        $("#AldenActionRobotReview").click(function () {
+            $(this).toggleClass('btn-default btn-success');
+            $(this).toggleClass('active');
+        });
+        $("#GetSingleItem").click(function () {
+            let url = "http://open.api.ebay.com/shopping?callname=GetSingleItem&ItemID=XXXXX&responseencoding=JSON&appid=DavidKre-38d6-46e7-a5bd-9cec2334424a&siteid=0&IncludeSelector=TextDescription,ItemSpecifics,Details&version=1085";
+            var res = url.replace("XXXXX", d.Listings[y].ItemID);
+            var win = window.open(res, '_blank');
+        });
+        $("#GetCompleted").click(function () {
+            let url = d.Listings[y].Pictures[x];
+
+            url = "https://svcs.ebay.com/services/search/FindingService/v1?keywords=XXXXX&OPERATION-NAME=findCompletedItems&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=DavidKre-38d6-46e7-a5bd-9cec2334424a&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&sortOrder=StartTimeNewest&paginationInput.pageNumber=1&paginationInput.entriesPerPage=100";
+            var res = url.replace("XXXXX", d.Listings[y].ItemID);
+            var win = window.open(res, '_blank');
+        });
+
+        $("#Watchlist").click(function () {
+            $.post("/vc/admin/services/SaveWatchList.php",
+                {
+                    "ItemID": $("#ItemID").text()
+                },
+                function (data, status) {
+                    //  $(NOSbutton).removeClass("disabled").addClass("active");
+                    //  $(ShellButton).removeClass("disabled").addClass("active");
+                    $("#CorrectSize").removeClass("disabled").addClass("active");
+                    $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                });
+        });
+        $(DeleteItem).click(function () {
+            $.post("/vc/admin/services/DeleteWatchList.php",
+                {
+                    "ItemID": $("#ItemID").text()
+                },
+                function (data, status) {
+                    $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                });
+        });
+        $(IgnoreUser).click(function () {
+            $.post("/vc/admin/services/SaveIgnoreUserID.php",
+                {
+                    "ItemID": d.Listings[y].ItemID
+                },
+                function (data, status) {
+                    $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                    navChange('IgnoreUser', 'down');
+                });
+        });
+
+        $("#IgnoreBrand").click(function () {
+            SetBrandIgnore();
+        });
+
+        function SetBrandIgnore() {
+            $.post("/vc/admin/services/SaveIgnoreBrand.php",
+                {
+                    "ItemID": d.Listings[y].ItemID
+                },
+                function (data, status) {
+                    $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                    navChange('IgnoreBrand', 'down');
+                }
+            );
+        }
+
+        $(IgnoreItemGroupID).click(function () {
+            $.post("/vc/admin/services/SaveIgnoreItemGroupID.php",
+                {
+                    "ItemID": d.Listings[y].ItemID
+                },
+                function (data, status) {
+                    $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                    navChange('IgnoreItemGroupID', 'down');
+                });
+        });
+        $("#AldenActionUpdate").click(function () {
+            $.post("https://vcleat.com/vc/admin/services/SaveAldenModel.php",
+                {
+                    "ItemID": d.Listings[y].ItemID,
+                    "ModelNumber": $("#ModelNumberInput").val()
+                },
+                function (data, status) {
+                    $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                    if (data[0] == "1") {
+                        var p = "https://aldenmodelproject.com/api/?id=" + $("#ModelNumberInput").val() + "&obj=model&action=sync";
+                        $.get(p);
+                    }
+                    d.Listings[y].ModelNumber = $("#ModelNumberInput").val();
+                });
+        });
+        $("#AldenActionIgnore").click(function () {
+            $.post("https://vcleat.com/vc/admin/services/SaveAldenIgnore.php",
+                {
+                    "ItemID": d.Listings[y].ItemID
+                },
+                function (data, status) {
+                    $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+
+                    navChange('AldenActionIgnore', 'down');
+                });
+        });
+        $("#AldenActionCheckback").click(function () {
+            $.post("https://vcleat.com/vc/admin/services/SaveAldenCheckback.php",
+                {
+                    "ItemID": d.Listings[y].ItemID
+                },
+                function (data, status) {
+                    $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                    navChange('AldenActionCheckback', 'down');
+                });
+        });
+        $("#AldenActionResetItem").click(function () {
+            let resetItem = "https://vcleat.com/vc/admin/services/ampResetItem.php?ItemID=" + d.Listings[y].ItemID;
+            $.get(resetItem, function (data, status) {
+                $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+                navChange('AldenActionResetItem', 'down');
+            });
+        });
+
+        
+        // $(AldenActionNOS).click(function () {
+        //     $.post("https://vcleat.com/vc/admin/services/SaveAldenNOS.php",
+        //         {
+        //             "ItemID": d.Listings[y].ItemID
+        //         },
+        //         function (data, status) {
+        //             $("#ActionText").html("Data: " + data[0] + " Status: " + status);
+        //         });
+        // });
+        $("#ViewOnEbay").click(function () {
+            //roverLink = "https://rover.ebay.com/rover/1/711-53200-19255-0/1?icep_ff3=2&pub=5575134428&toolid=10001&campid=5338211469&customid=&ipn=psmain&icep_vectorid=229466&kwid=902099&mtid=824&kw=lg";
+            //roverLink += "&icep_item=" + d.Listings[y].ItemID;
+            let roverLink = "https://www.ebay.com/itm/" + d.Listings[y].ItemID;
+            let ebayTab = window.open(roverLink, "_blank").opener = null;
+        });
+        $("#AldenViewModel").click(function () {
+            let AMPlink = "https://aldenmodelproject.com//alden-" + $("#ModelNumberInput").val().toLowerCase();
+            let AMPTab = window.open(AMPlink, "_blank").opener = null;
+        });
+        function logView(ItemID) {
+            //console.log("logView");
+            $.post("/vc/admin/services/SaveItemView.php",
+                {
+                    "ItemID": ItemID
+                },
+                function (data, status) {
+                    // $("#ActionText").html("logView: " + status);
+                });
+        }
+
+        function logRobotReview(ItemID) {
+            console.log("logRobotReview");
+            $.post("/vc/admin/services/SaveRobotReview.php",
+                {
+                    "ItemID": ItemID
+                },
+                function (data, status) {
+                    $("#ActionText").html("robot: " + status);
+                }
+            );
+        }
+        function logRobotReview(ItemID) {
+            console.log("logRobotReview");
+            $.post("/vc/admin/services/SaveRobotReview.php",
+                {
+                    "ItemID": ItemID
+                },
+                function (data, status) {
+                    $("#ActionText").html("robot: " + status);
+                }
+            );
+        }
+
+        function getAldenRobotScoringText() {
+            let robotScoreText = "https://vcleat.com/vc/admin/services/ampGetRobotScoringText.php?ItemID=" + d.Listings[y].ItemID;
+            $.get(robotScoreText, function (data, status) {
+                aldenRobotScoreTextInfo = JSON.parse(data);
+                displayAldenModelData();
+            });
+
+        }
+        function getAldenRobotScoringVisual() {
+            let robotScoreVisual = "https://vcleat.com/vc/admin/services/ampGetRobotScoringVisual.php?ItemID=" + d.Listings[y].ItemID;
+            $.get(robotScoreVisual, function (data, status) {
+                aldenRobotScoreVisualInfo = JSON.parse(data).toString();
+                displayAldenModelData();
+            });
+        }
+
+        function getAldenModelData() {
+            let model = "https://vcleat.com/vc/services/GetAldenModel.php?ModelNumber=" + d.Listings[y].ModelNumber;
+            $.get(model, function (data, status) {
+                aldenModelInfo = JSON.parse(data);
+                displayAldenModelData();
+            });
+        }
+
+        function displayAldenModelData() {
+            if (!((Object.keys(aldenModelInfo).length === 0) && (aldenModelInfo.constructor === Object))) {
+                let aldenInfo = "";
+                aldenInfo = d.Listings[y].CurrentPrice + " " + d.Listings[y].CurrencyID;
+                aldenInfo += "<br>" + aldenModelInfo["ModelNumber"] + displayDataValue(aldenModelInfo["ShoeType"]) + displayDataValue(aldenModelInfo["Style"]) + displayDataValue(aldenModelInfo["ShoeLastName"]) + displayDataValue(aldenModelInfo["Leather"]) + displayDataValue(aldenModelInfo["Color"]) + displayDataValue(aldenModelInfo["Outsole"]);
+                aldenInfo += "<br>Text: " + aldenRobotScoreTextInfo["ModelNumberTopScore"];
+                aldenInfo += "<br>Visual: " + aldenRobotScoreVisualInfo;
+                $("#PriceValue").html(aldenInfo);
+            } else {
+                $("#PriceValue").html("");
+            }
+        }
+        function displayDataValue(val) {
+            if (val === undefined) {
+                return "<br><span style='color: red;'>No Value</span>";
+            }
+            else {
+                return "<br>" + val;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
